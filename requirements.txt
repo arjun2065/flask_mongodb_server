@@ -1,4 +1,4 @@
 flask
 pymongo
 gunicorn
-python -dotenv
+python-dotenv
