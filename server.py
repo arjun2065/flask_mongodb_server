@@ -5,7 +5,7 @@ app=Flask(__name__)
 from dotenv import load_dotenv
 load_dotenv()
 mongo=os.getenv("mongo_url")
-client=MongoClient(os.getenv(mongo))
+client=MongoClient(os.getenv("mongo_url"))
 database=client["class"]
 collection=database["student"]
 
