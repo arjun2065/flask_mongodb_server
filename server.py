@@ -35,7 +35,7 @@ def get_student(id):
 @app.route('/delete_student/<id>',methods=["DELETE"])
 def delete_student(id):
 
-    collection.delete_one({"id":id},{"_id":0})
+    collection.delete_one({"id":id})
     return jsonify("done !")
 
 @app.route('/update/<id>',methods=["PUT"])
