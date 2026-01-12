@@ -14,7 +14,7 @@ def welcome():
 
 @app.route('/add_student',methods=["POST"])
 def add_student():
-    data=request.json
+    data=request.get_json
     if not data:
         return jsonify("please provide a valid data")
     student={
@@ -26,7 +26,8 @@ def add_student():
     try:
         collection.insert_one(student)
         return jsonify("successfull !")
-    except:
+    except Exception as e:
+        print(e)
         return jsonify("server error")
 
 @app.route('/get_student/<id>',methods=["GET"])
