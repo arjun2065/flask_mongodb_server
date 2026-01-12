@@ -41,7 +41,7 @@ def delete_student(id):
 @app.route('/update/<id>',methods=["PUT"])
 def update_student(id):
     data=request.json
-    collection.update_one({"id":id},{"$set",data})
+    collection.update_one({"id":id},{"$set":data})
     return jsonify("done !")
 
 if __name__=='__main__':
