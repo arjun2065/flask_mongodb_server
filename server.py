@@ -14,7 +14,7 @@ def welcome():
 
 @app.route('/add_student',methods=["POST"])
 def add_student():
-    data=request.get_json
+    data=request.get_json()
     if not data:
         return jsonify("please provide a valid data")
     student={
@@ -34,11 +34,11 @@ def add_student():
 def get_student(id):
     try:
         student=collection.find_one({"id":id},{"_id":0})
-    except:
+        return jsonify(student)
+    except Exception as e:
+        print(e)
         return jsonify("server error")
-    if not student:
-        return jsonify("enter a valid data")
-    return jsonify(student)
+    
 
 @app.route('/delete_student/<id>',methods=["DELETE"])
 def delete_student(id):
@@ -46,12 +46,13 @@ def delete_student(id):
 
         collection.delete_one({"id":id})
         return jsonify("done !")
-    except:
+    except Exception as e:
+        print(e)
         return jsonify("server error")
 
 @app.route('/update/<id>',methods=["PUT"])
 def update_student(id):
-    data=request.json
+    data=request.get_json()
     if not data:
         return jsonify("please provide a valid data")
     collection.update_one({"id":id},{"$set":data})
