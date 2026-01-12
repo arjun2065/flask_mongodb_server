@@ -15,32 +15,44 @@ def welcome():
 @app.route('/add_student',methods=["POST"])
 def add_student():
     data=request.json
+    if not data:
+        return jsonify("please provide a valid data")
     student={
         "id":data.get("id"),
         "name":data.get("name"),
         "roll_no":data.get("roll_no"),
         "cgpa":data.get("cgpa")
     }
-
-    collection.insert_one(student)
-    return jsonify("successfull !")
+    try:
+        collection.insert_one(student)
+        return jsonify("successfull !")
+    except:
+        return jsonify("server error")
 
 @app.route('/get_student/<id>',methods=["GET"])
 def get_student(id):
-    student=collection.find_one({"id":id},{"_id":0})
+    try:
+        student=collection.find_one({"id":id},{"_id":0})
+    except:
+        return jsonify("server error")
     if not student:
-        return jsonify("something went wrong")
+        return jsonify("enter a valid data")
     return jsonify(student)
 
 @app.route('/delete_student/<id>',methods=["DELETE"])
 def delete_student(id):
+    try:
 
-    collection.delete_one({"id":id})
-    return jsonify("done !")
+        collection.delete_one({"id":id})
+        return jsonify("done !")
+    except:
+        return jsonify("server error")
 
 @app.route('/update/<id>',methods=["PUT"])
 def update_student(id):
     data=request.json
+    if not data:
+        return jsonify("please provide a valid data")
     collection.update_one({"id":id},{"$set":data})
     return jsonify("done !")
 
