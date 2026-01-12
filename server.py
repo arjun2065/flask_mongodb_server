@@ -27,7 +27,7 @@ def add_student():
 
 @app.route('/get_student/<id>',methods=["GET"])
 def get_student(id):
-    student=collection.find_one({"id":id})
+    student=collection.find_one({"id":id},{"_id":0})
     if not student:
         return jsonify("something went wrong")
     return jsonify(student)
@@ -35,13 +35,13 @@ def get_student(id):
 @app.route('/delete_student/<id>',methods=["DELETE"])
 def delete_student(id):
 
-    collection.delete_one({"id":id})
+    collection.delete_one({"id":id},{"_id":0})
     return jsonify("done !")
 
 @app.route('/update/<id>',methods=["PUT"])
 def update_student(id):
     data=request.json
-    collection.update_one({"id":id},{data})
+    collection.update_one({"id":id},{"$sign",data})
     return jsonify("done !")
 
 if __name__=='__main__':
